@@ -1,37 +1,69 @@
 ﻿using System.IO;
 using System.Windows.Media.Imaging;
+using FavAppsStarter.Model;
 
 namespace FavAppsStarter.ViewModel
 {
-    public class AppElementViewModel : ObservableObject
+    public class AppElementViewModel : TreeViewItemViewModel
     {
-        private BitmapImage _imageSource;
-        private string _title;
-        private FileInfo _fullFilePath;
-        private string _arguments;
-        
-        public BitmapImage ImageSource
+        private readonly AppElement _element;
+
+        public AppElementViewModel(AppElement element, TreeViewItemViewModel parent)
+            : base(parent, true)
         {
-            get => _imageSource;
-            set => SetProperty(ref _imageSource, value);
+            _element = element;
         }
 
-        public string Title
+        public string Name
         {
-            get => _title;
-            set => SetProperty(ref _title, value);
+            get => _element.Name;
+            set
+            {
+                var name = _element.Name;
+                if (SetProperty(ref name, value))
+                {
+                    _element.Name = name;
+                }
+            }
+        }
+
+        public BitmapImage ImageSource
+        {
+            get => _element.ImageSource;
+            set
+            {
+                var imageSource = _element.ImageSource;
+                if (SetProperty(ref imageSource, value))
+                {
+                    _element.ImageSource = imageSource;
+                }
+            }
         }
 
         public FileInfo FullFilePath
         {
-            get => _fullFilePath;
-            set => SetProperty(ref _fullFilePath, value);
+            get => _element.FullFilePath;
+            set
+            {
+                var fullFilePath = _element.FullFilePath;
+                if (SetProperty(ref fullFilePath, value))
+                {
+                    _element.FullFilePath = fullFilePath;
+                }
+            }
         }
 
         public string Arguments
         {
-            get => _arguments;
-            set => SetProperty(ref _arguments, value);
+            get => _element.Arguments;
+            set
+            {
+                var arguments = _element.Arguments;
+                if (SetProperty(ref arguments, value))
+                {
+                    _element.Arguments = arguments;
+                }
+            }
         }
     }
 }

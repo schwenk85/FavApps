@@ -20,9 +20,7 @@
                     https://www.codeproject.com/articles/26288/simplifying-the-wpf-treeview-by-using-the-viewmode
                     https://www.codeproject.com/Articles/236621/WPF-Treeview-Styling-and-Template-Binding-using-MV
                     -->
-                    <TreeView Margin="90,10,10,10"
-                              ItemsSource="{Binding AppGroups}"
-                              ItemTemplate="{DynamicResource AppGroupsTemplate}">
+                    <TreeView Margin="90,10,10,10" ItemsSource="{Binding AppGroups}">
                         <TreeView.ItemContainerStyle>
                             <!-- This Style binds a TreeViewItem to a TreeViewItemViewModel. -->
                             <Style TargetType="{x:Type TreeViewItem}">
@@ -37,10 +35,24 @@
                             </Style>
                         </TreeView.ItemContainerStyle>
                         <TreeView.Resources>
-                            <DataTemplate x:Key="AppElementsTemplate" 
+                            <HierarchicalDataTemplate 
+                                DataType="{x:Type vm:AppGroupViewModel}" 
+                                ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <!--<Image Width="16" Height="16" Margin="3,0" Source="Images\Region.png" />-->
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                            <DataTemplate DataType="{x:Type vm:AppElementViewModel}">
+                                <StackPanel Orientation="Horizontal">
+                                    <!--<Image Width="16" Height="16" Margin="3,0" Source="Images\City.png" />-->
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                            <!--<DataTemplate x:Key="AppElementsTemplate" 
                                           DataType="vm:AppElementViewModel">
                                 <StackPanel Orientation="Horizontal">
-                                    <!--<CheckBox Focusable="False" IsChecked="{Binding IsChecked, Mode=TwoWay}" />-->
+                                    <CheckBox Focusable="False" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
                                     <TextBlock Text="{Binding Title}" />
                                 </StackPanel>
                             </DataTemplate>
@@ -49,10 +61,10 @@
                                                       ItemsSource="{Binding AppElements}"
                                                       ItemTemplate="{StaticResource AppElementsTemplate}">
                                 <StackPanel Orientation="Horizontal">
-                                    <!--<CheckBox Focusable="False" IsChecked="{Binding IsChecked, Mode=TwoWay}" />-->
-                                    <TextBlock Text="{Binding Title}" />
+                                    <CheckBox Focusable="False" IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+                                    <TextBlock Text="{Binding Name}" />
                                 </StackPanel>
-                            </HierarchicalDataTemplate>
+                            </HierarchicalDataTemplate>-->
                         </TreeView.Resources>
                     </TreeView>
                     <Button Content="Add group" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>

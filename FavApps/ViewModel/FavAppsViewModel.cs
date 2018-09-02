@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Windows.Input;
+using FavAppsStarter.Model;
 using FavAppsStarter.View;
 
 namespace FavAppsStarter.ViewModel
@@ -8,21 +10,15 @@ namespace FavAppsStarter.ViewModel
     public class FavAppsViewModel : ObservableObject
     {
         private ObservableCollection<AppGroupViewModel> _appGroups = new ObservableCollection<AppGroupViewModel>();
-        private AppGroupViewModel _selectedAppGroup;
+
         private RelayCommand _openSettingsCommand;
 
         public FavAppsViewModel()
         {
-            AppGroups.Add(
-                new AppGroupViewModel
-                {
-                    Title = "Media Centers",
-                    AppElements = new ObservableCollection<AppElementViewModel>
-                    {
-                        new AppElementViewModel { Title = "Emby" },
-                        new AppElementViewModel { Title = "Plex" }
-                    }
-                });
+            var groups = Database.GetAppGroups();
+
+            AppGroups = new ObservableCollection<AppGroupViewModel>(
+                groups.Select(group => new AppGroupViewModel(group)).ToList());
         }
 
         public ObservableCollection<AppGroupViewModel> AppGroups
@@ -31,11 +27,12 @@ namespace FavAppsStarter.ViewModel
             set => SetProperty(ref _appGroups, value);
         }
 
-        public AppGroupViewModel SelectedAppGroup
-        {
-            get => _selectedAppGroup;
-            set => SetProperty(ref _selectedAppGroup, value);
-        }
+        //private AppGroupViewModel _selectedAppGroup;
+        //public AppGroupViewModel SelectedAppGroup
+        //{
+        //    get => _selectedAppGroup;
+        //    set => SetProperty(ref _selectedAppGroup, value);
+        //}
 
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         public ICommand OpenSettingsCommand

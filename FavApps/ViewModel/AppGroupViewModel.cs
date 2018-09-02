@@ -1,29 +1,49 @@
-﻿using System.Collections.ObjectModel;
+﻿using FavAppsStarter.Model;
 
 namespace FavAppsStarter.ViewModel
 {
-    public class AppGroupViewModel : ObservableObject
+    public class AppGroupViewModel : TreeViewItemViewModel
     {
-        private string _title;
-        private ObservableCollection<AppElementViewModel> _appElements = new ObservableCollection<AppElementViewModel>();
-        private AppElementViewModel _selectedAppElements;
+        //private ObservableCollection<AppElementViewModel>
+        //    _appElements = new ObservableCollection<AppElementViewModel>();
+        //private AppElementViewModel _selectedAppElements;
+        //public ObservableCollection<AppElementViewModel> AppElements
+        //{
+        //    get => _appElements;
+        //    set => SetProperty(ref _appElements, value);
+        //}
+        //public AppElementViewModel SelectedAppElements
+        //{
+        //    get => _selectedAppElements;
+        //    set => SetProperty(ref _selectedAppElements, value);
+        //}
 
-        public string Title
+        private readonly AppGroup _group;
+
+        public AppGroupViewModel(AppGroup group) : base(null, true)
         {
-            get => _title;
-            set => SetProperty(ref _title, value);
+            _group = group;
         }
 
-        public ObservableCollection<AppElementViewModel> AppElements
+        public string Name
         {
-            get => _appElements;
-            set => SetProperty(ref _appElements, value);
+            get => _group.Name;
+            set
+            {
+                var groupName = _group.Name;
+                if (SetProperty(ref groupName, value))
+                {
+                    _group.Name = groupName;
+                }
+            }
         }
 
-        public AppElementViewModel SelectedAppElements
+        protected override void LoadChildren()
         {
-            get => _selectedAppElements;
-            set => SetProperty(ref _selectedAppElements, value);
+            foreach (var element in Database.GetAppElements(_group))
+            {
+                Children.Add(new AppElementViewModel(element, this));
+            }
         }
     }
 }
