@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using FavAppsStarter.View;
 
-namespace FavApps
+namespace FavAppsStarter.ViewModel
 {
     public class FavAppsViewModel : ObservableObject
     {
-        private ObservableCollection<AppGroup> _appGroups = new ObservableCollection<AppGroup>();
-        private AppGroup _selectedAppGroup;
+        private ObservableCollection<AppGroupViewModel> _appGroups = new ObservableCollection<AppGroupViewModel>();
+        private AppGroupViewModel _selectedAppGroup;
         private RelayCommand _openSettingsCommand;
 
         public FavAppsViewModel()
         {
-
+            AppGroups.Add(
+                new AppGroupViewModel
+                {
+                    Title = "Media Centers",
+                    AppElements = new ObservableCollection<AppElementViewModel>
+                    {
+                        new AppElementViewModel { Title = "Emby" },
+                        new AppElementViewModel { Title = "Plex" }
+                    }
+                });
         }
 
-        public ObservableCollection<AppGroup> AppGroups
+        public ObservableCollection<AppGroupViewModel> AppGroups
         {
             get => _appGroups;
             set => SetProperty(ref _appGroups, value);
         }
 
-        public AppGroup SelectedAppGroup
+        public AppGroupViewModel SelectedAppGroup
         {
             get => _selectedAppGroup;
             set => SetProperty(ref _selectedAppGroup, value);
@@ -44,7 +49,7 @@ namespace FavApps
 
         private void OpenSettings()
         {
-            var settings = new Settings
+            var settings = new SettingsView
             {
                 DataContext = this
             };

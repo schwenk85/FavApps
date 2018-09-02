@@ -1,6 +1,8 @@
 ﻿using System.Windows;
+using FavAppsStarter.View;
+using FavAppsStarter.ViewModel;
 
-namespace FavApps
+namespace FavAppsStarter
 {
     public partial class App
     {
@@ -8,7 +10,7 @@ namespace FavApps
         {
             base.OnStartup(e);
 
-            var favApps = new Main
+            var favApps = new MainView
             {
                 DataContext = new FavAppsViewModel()
             };

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace FavApps
+namespace FavAppsStarter.ViewModel
 {
     /// <summary>
     ///     A reusable ICommand

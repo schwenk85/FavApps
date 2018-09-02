@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace FavApps
+namespace FavAppsStarter.ViewModel
 {
-    public class AppElement : ObservableObject
+    public class AppElementViewModel : ObservableObject
     {
         private BitmapImage _imageSource;
         private string _title;
         private FileInfo _fullFilePath;
         private string _arguments;
-
+        
         public BitmapImage ImageSource
         {
             get => _imageSource;

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace FavApps
+namespace FavAppsStarter.ViewModel
 {
     public abstract class ObservableObject : INotifyPropertyChanged
     {
